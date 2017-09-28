@@ -13,13 +13,14 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: nginx -g 'daemon off;'
+    command: nginx-debug -g 'daemon off;'
 
   alpha:
     image: nginx:1.13.5-alpine
     container_name: alpha
     volumes:
       - ./alpha.html:/usr/share/nginx/html/index.html
+      - ./certs:/etc/ssl/
     networks:
       - one
 
@@ -28,6 +29,7 @@ services:
     container_name: beta
     volumes:
       - ./beta.html:/usr/share/nginx/html/index.html
+      - ./certs:/etc/ssl/
     networks:
       - two
 
@@ -36,6 +38,7 @@ services:
     container_name: gamma
     volumes:
       - ./gamma.html:/usr/share/nginx/html/index.html
+      - ./certs:/etc/ssl/
     networks:
       - one
       - two
